@@ -204,14 +204,6 @@ void StateEstimateBase::estContactForce(const ros::Duration& period)
     estContactforce_(6 * 2 + 2 + i) = estContactforce_.segment<6>(6 * i).norm();
   }
 
-  // std_msgs::Float64MultiArray est_contactforce_msg;
-  // est_contactforce_msg.data.resize(6 * 2 + 4);
-  // std::cout<<"estContactforce: ";
-  // for(int i=0; i<16; i++){
-  //   std::cout<<estContactforce_(i)<<" ";
-  // }
-  // std::cout<<std::endl;
-  // estContactforce_pub_.publish(est_contactforce_msg);
 }
 
 contact_flag_t StateEstimateBase::estContactState(const scalar_t& time)

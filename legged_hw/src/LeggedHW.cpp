@@ -22,7 +22,6 @@ bool LeggedHW::init(ros::NodeHandle& root_nh, ros::NodeHandle& /*robot_hw_nh*/)
   }
 
   motorsInterface=std::make_shared<lively_robot::robot>();
-  // imuInterface=std::make_shared<FDILink::ahrsBringup>();
 
   registerInterface(&jointStateInterface_);
   registerInterface(&hybridJointInterface_);
