@@ -1,0 +1,3 @@
+Wed Feb 28 17:46:56 2024
+WARNING: mju_openResource: unknown file 'trash:///hunter_bipedal_control/legged_examples/legged_hunter/legged_hunter_description/urdf/pai_description_4.urdf'
+

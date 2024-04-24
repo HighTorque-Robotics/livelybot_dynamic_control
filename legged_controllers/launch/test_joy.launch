@@ -1,0 +1,17 @@
+<launch>
+  <node pkg = "joy" type = "joy_node" name = "joy_node" output="screen">
+    <param name="dev"               value="/dev/input/js0" type="string"/>
+    <param name="deadzone"          value="0.05"/>
+    <param name="autorepeat_rate"   value="0.0"/>
+    <param name="coalesce_interval" value="0.001"/>
+  </node>
+  <node pkg = "teleop_twist_joy" type = "teleop_node" name = "teleop_node" output="screen">
+    <param name="enable_button"         value="0"/>
+    <param name="enable_turbo_button"   value="-1"/>
+    <param name="axis_linear"           value="1"/>
+    <param name="scale_linear_turbo"    value="1.0"/>
+    <param name="axis_angular"          value="0"/>
+    <param name="scale_angular"         value="1.0"/>
+    <remap from="cmd_vel" to="/cmd_vel" />
+  </node>
+</launch>
