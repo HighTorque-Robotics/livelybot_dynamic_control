@@ -58,7 +58,7 @@ catkin build legged_controllers legged_hunter_description legged_gazebo
 
 ## Quick Start
 - Gazebo Simulation
-![](./docs/robot1.png)
+![](./docs/robot1.jpg)
 []()
 
 ### Simulation
@@ -82,7 +82,7 @@ roslaunch legged_controllers one_start_real.launch
  Gazebo
      First the user needs to set ***kp_position=100***, ***kd_position=1*** in rqt (need refresh) and reset the simulation by pressing ***Ctrl+Shift+R*** to make the robot stand up.  
 
-![](./docs/stance_robot.png)
+![](./docs/stance_robot.jpg)
 
 ## Gamepad Control
 
