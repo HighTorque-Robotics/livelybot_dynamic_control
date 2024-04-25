@@ -1,6 +1,7 @@
 <?xml version="1.0" ?>
 
 <launch>
+
     <arg name="robot_type" default="hunter" doc="Robot type: [hunter]"/>
     <arg name="rviz" default="true"/>
     <arg name="record_data" default="false"/>

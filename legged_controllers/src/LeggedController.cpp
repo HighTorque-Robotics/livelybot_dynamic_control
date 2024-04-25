@@ -557,7 +557,7 @@ void LeggedController::ModeSubscribe()
 void LeggedController::EmergencyStopCallback(const std_msgs::Float32::ConstPtr& msg)
 {
   emergencyStopFlag_ = true;
-  ROS_INFO("Successfully load the controller");
+  ROS_INFO("unload the controller");
 }
 
 void LeggedController::setWalkCallback(const std_msgs::Float32::ConstPtr& msg)
