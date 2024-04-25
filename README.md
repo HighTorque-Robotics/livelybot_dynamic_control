@@ -34,7 +34,9 @@ its dependencies following the step below.
    catkin config -DCMAKE_BUILD_TYPE=RelWithDebInfo 
    catkin build ocs2_legged_robot_ros ocs2_self_collision_visualization
    ```
-
+   Ensure you can command the ANYmal as shown in
+   the [document](https://leggedrobotics.github.io/ocs2/robotic_examples.html#legged-robot) and below.
+   ![](./README.assets/legged_robot.gif)
 ### Clone and Build
 
 ```shell
@@ -56,6 +58,7 @@ catkin build legged_controllers legged_hunter_description legged_gazebo
 
 ## Quick Start
 - Gazebo Simulation
+![](./docs/robot1.png)
 []()
 
 ### Simulation
@@ -79,12 +82,15 @@ roslaunch legged_controllers one_start_real.launch
  Gazebo
      First the user needs to set ***kp_position=100***, ***kd_position=1*** in rqt (need refresh) and reset the simulation by pressing ***Ctrl+Shift+R*** to make the robot stand up.  
 
+![](./docs/stance_robot.png)
+
 ## Gamepad Control
 
 1. Start controller
 ```
 Press the left joystick once，than push RT
 ```
+![](./docs/load_controller.png)
 
 Terminal appears "Successfully load the controller"
 
@@ -98,7 +104,7 @@ push RB
 
 The following is a schematic diagram of the handle operation:
 
-<!-- ![](./docs/f710-gallery-1.png) -->
+![](./docs/f710-gallery-1.png)
 
 ## Simulation Without Gamepad
 
