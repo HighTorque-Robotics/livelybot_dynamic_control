@@ -21,7 +21,7 @@ bool LeggedHW::init(ros::NodeHandle& root_nh, ros::NodeHandle& /*robot_hw_nh*/)
     return false;
   }
 
-  motorsInterface=std::make_shared<lively_robot::robot>();
+  motorsInterface=std::make_shared<livelybot_serial::robot>();
 
   registerInterface(&jointStateInterface_);
   registerInterface(&hybridJointInterface_);

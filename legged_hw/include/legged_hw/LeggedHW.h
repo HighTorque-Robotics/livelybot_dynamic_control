@@ -55,7 +55,7 @@ protected:
   ContactSensorInterface contactSensorInterface_;                // NOLINT(misc-non-private-member-variables-in-classes)
   // URDF model of the robot
   std::shared_ptr<urdf::Model> urdfModel_;  // NOLINT(misc-non-private-member-variables-in-classes)
-  std::shared_ptr<lively_robot::robot> motorsInterface;
+  std::shared_ptr<livelybot_serial::robot> motorsInterface;
   // std::shared_ptr<FDILink::ahrsBringup> imuInterface;
 
 

@@ -24,7 +24,7 @@
         <arg name = "model_type" default = "P"/>
         <arg name = "design" default = "Hector"/>  
 
-    <rosparam file="/home/yhfone/bipedal_robot_ws/src/livelybot_robot/src/livelybot_description/robot_param/12dof_STM32H730_model_P_Hector_params_livelybot.yaml" command="load" />
+    <rosparam file="/home/yhfone/bipedal_robot_ws/src/liveleybotrobot/src/livelybot_description/robot_param/12dof_STM32H730_model_P_Hector_params_livelybot.yaml" command="load" />
 
 
     <node name="legged_bridge_hw" pkg="legged_bridge_hw" type="legged_bridge_hw" respawn="false" clear_params="true" output="screen">
@@ -37,7 +37,7 @@
         <param name="device_type"  value="1"/> -->
         <!-- <rosparam file="$(find livelybot_description)/robot_param/$(arg dof_type)dof_$(arg mcu_type)_model_$(arg model_type)_$(arg design)_params.yaml" command="load" /> -->
         <!-- <rosparam file="/home/riddle/Project/control_ws/src/livelybot_robot/src/livelybot_description/robot_param/10dof_STM32H730_model_P_Hector_params.yaml" command="load" /> -->
-    <rosparam file="/home/yhfone/bipedal_robot_ws/src/livelybot_robot/src/livelybot_description/robot_param/12dof_STM32H730_model_P_Hector_params_livelybot.yaml" command="load" />
+    <rosparam file="/home/yhfone/bipedal_robot_ws/src/liveleybotrobot/src/livelybot_description/robot_param/12dof_STM32H730_model_P_Hector_params_livelybot.yaml" command="load" />
 
     </node>
     
