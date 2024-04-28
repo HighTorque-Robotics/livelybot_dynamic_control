@@ -3,7 +3,7 @@ teleop:
     type: topic
     message_type: geometry_msgs/Twist
     topic_name: cmd_vel
-    deadman_buttons: [ 4 ]
+    deadman_buttons: [ 6 ]   # # 4 map F710 Speed commands can only be issued by pressing this button  
     axis_mappings:
       - axis: 3
         target: angular.z
@@ -45,9 +45,9 @@ teleop:
     type: topic
     message_type: std_msgs/Float32
     topic_name: load_controller
-    deadman_buttons: [ 7 ]
+    deadman_buttons: [ 9 ]  # 7 map F710
     axis_mappings:
-      - button: 7
+      - button: 9   # 7  map F710
         target: data
         scale: 2
         offset: 0
@@ -67,9 +67,9 @@ teleop:
     type: topic
     message_type: std_msgs/Float32
     topic_name: set_walk
-    deadman_buttons: [ 5 ]
+    deadman_buttons: [ 7 ]   # 5 map F710
     axis_mappings:
-      - button: 5
+      - button: 7 # 5 map F710
         target: data
         scale: 2
         offset: 0

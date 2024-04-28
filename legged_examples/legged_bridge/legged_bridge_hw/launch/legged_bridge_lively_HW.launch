@@ -11,14 +11,6 @@
 
     <param name="robot_type" value="$(arg robot_type)"/>
 
-
-    <!-- 读取机器人参数,主要是初始化robot类 -->
-     <!-- <arg name="debug" default="false"/> -->
-    <!-- <arg name="debug" default="false"/> -->
-   
-    <!-- <rosparam file="$(find serial_test)/robot_param/10dof_STM32H730_model_P_Hector_params.yaml" command="load" /> -->
-  <!-- <include file='$(find livelybot_description)/launch/livelybot_description.launch' /> -->
-
         <arg name = "dof_type" default = "10"/>
         <arg name = "mcu_type" default = "STM32H730"/>
         <arg name = "model_type" default = "P"/>
