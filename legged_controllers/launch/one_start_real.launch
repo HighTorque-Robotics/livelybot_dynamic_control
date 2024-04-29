@@ -2,7 +2,8 @@
 
 <launch>
     <!-- Rosbag record node -->
-
+    <node name="rosbag_record" pkg="rosbag" type="record" args="-o /home/yhfone/ros_datas/mybag /controllers/legged_controller/joint_position" output="screen"/>
+    
     <arg name="robot_type" default="hunter" doc="Robot type: [hunter]"/>
     <arg name="rviz" default="true"/>
     <arg name="record_data" default="false"/>

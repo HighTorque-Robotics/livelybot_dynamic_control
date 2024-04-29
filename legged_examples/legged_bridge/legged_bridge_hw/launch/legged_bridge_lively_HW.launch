@@ -4,33 +4,16 @@
     <param name="legged_robot_description" command="$(find xacro)/xacro $(find legged_hunter_description)/urdf/hunter.urdf
         robot_type:=$(arg robot_type) "/>
 
-    <!-- <node name="generate_urdf" pkg="legged_common" type="generate_urdf.sh" output="screen"
-        args="$(find legged_hunter_description)/urdf/hunter.urdf $(arg robot_type)"/> -->
-
     <rosparam file="$(find legged_bridge_hw)/config/$(arg robot_type).yaml" command="load"/>
 
     <param name="robot_type" value="$(arg robot_type)"/>
 
-        <arg name = "dof_type" default = "10"/>
-        <arg name = "mcu_type" default = "STM32H730"/>
-        <arg name = "model_type" default = "P"/>
-        <arg name = "design" default = "Hector"/>  
-
-    <rosparam file="/home/yhfone/bipedal_robot_ws/src/liveleybotrobot/src/livelybot_description/robot_param/12dof_STM32H730_model_P_Hector_params_livelybot.yaml" command="load" />
-
+    <arg name = "dof_type" default = "10"/>
+    <arg name = "mcu_type" default = "STM32H730"/>
+    <arg name = "model_type" default = "P"/>
+    <arg name = "design" default = "Hector"/>  
 
     <node name="legged_bridge_hw" pkg="legged_bridge_hw" type="legged_bridge_hw" respawn="false" clear_params="true" output="screen">
-        <!-- <param name="debug"  value="true"/> -->
-        <!-- <param name="port"  value="/dev/ttyACM0"/>
-        <param name="baud"  value="921600"/>
-        <param name="imu_topic"  value="/lvbot_imu"/>
-        <param name="imu_frame"  value="imu_link"/>
-        <param name="mag_pose_2d_topic"  value="/mag_pose_2d"/>
-        <param name="device_type"  value="1"/> -->
-        <!-- <rosparam file="$(find livelybot_description)/robot_param/$(arg dof_type)dof_$(arg mcu_type)_model_$(arg model_type)_$(arg design)_params.yaml" command="load" /> -->
-        <!-- <rosparam file="/home/riddle/Project/control_ws/src/livelybot_robot/src/livelybot_description/robot_param/10dof_STM32H730_model_P_Hector_params.yaml" command="load" /> -->
-    <rosparam file="/home/yhfone/bipedal_robot_ws/src/liveleybotrobot/src/livelybot_description/robot_param/12dof_STM32H730_model_P_Hector_params_livelybot.yaml" command="load" />
-
     </node>
     
     <node pkg="yesense_imu" type="yesense_imu_node" name="yesense_imu_node" output="screen" respawn="true" respawn_delay="0.002" >

@@ -115,10 +115,10 @@ private:
   YKSMotorData yksSendcmd_[12];
   float transform_CurrentPos[12] = { 0 };
 
-  const std::vector<int> directionMotor_{ -1, 1, 1, 1,  -1, -1, 1, 1, -1, -1, 0, 0 };//65432
+  const std::vector<int> directionMotor_{ -1, 1, 1, 1,  -1, -1, 1, 1, -1, -1, 1, 1 };//65432
 
-  float read_baseMotor_[10] = { 0, 0, 0, 0, 0.1, 0, 0, 0, 0, -0.25};
-  float write_baseMotor_[10] = { 0, 0, 0, 0, 0.15, 0, 0, 0, 0, -0.3};
+  float read_baseMotor_[12] = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+  float write_baseMotor_[12] = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
 
   std::vector<int> map_index{2, 3, 1, 4, 0, 7, 8, 6, 9, 5};
   std::vector<int> map_index_12dof{3, 4, 2, 5, 1, 9, 10, 8, 11, 7};
