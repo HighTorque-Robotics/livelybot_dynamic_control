@@ -1,0 +1,7 @@
+<launch>
+  <arg name="bagfile" default="/home/yhfone/ros_datas/my_bagfile.bag"/>
+  
+  <arg name="topics" default="/controllers/legged_controller/joint_position  /controllers/legged_controller/joint_velocity  /controllers/legged_controller/joint_torque /controllers/legged_controller/cmd_joint_position  /controllers/legged_controller/cmd_joint_velocity  /controllers/legged_controller/cmd_joint_torque"/>
+
+  <node name="rosbag_record" pkg="rosbag" type="record" args="-o $(arg bagfile) $(arg topics)"/>
+</launch>

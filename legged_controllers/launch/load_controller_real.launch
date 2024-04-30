@@ -5,6 +5,7 @@
     <arg name="cheater" default="false"/>
 
     <include file="$(find legged_controllers)/launch/joy_teleop.launch"/>
+    <include file="$(find legged_controllers)/launch/rosbag_topic.launch"/>
 
     <!-- make the files into global parameters -->
     <param name="urdfFile" value="$(find legged_hunter_description)/urdf/$(arg robot_type).urdf"/>

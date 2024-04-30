@@ -153,6 +153,7 @@ private:
   InverseKinematics inverseKinematics_;
 
   ros::Publisher pos_pub_, vel_pub_, torque_pub_, body_pose_pub_, imu_pub_;
+  ros::Publisher cmd_pos_pub_, cmd_vel_pub_, cmd_tau_pub_;
   
 
 };
