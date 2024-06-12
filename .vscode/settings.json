@@ -57,6 +57,15 @@
   "C_Cpp_Runner.useLinkTimeOptimization": false,
   "C_Cpp_Runner.msvcSecureNoWarnings": false,
   "files.associations": {
-    "atomic": "cpp"
+    "atomic": "cpp",
+    "array": "cpp",
+    "bitset": "cpp",
+    "string_view": "cpp",
+    "initializer_list": "cpp",
+    "utility": "cpp",
+    "cmath": "cpp",
+    "string": "cpp",
+    "chrono": "cpp",
+    "config.h": "c"
   }
 }

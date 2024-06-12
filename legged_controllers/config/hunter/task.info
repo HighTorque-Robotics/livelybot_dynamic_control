@@ -305,8 +305,8 @@ frictionConeTask
 
 swingLegTask
 {
-    kp                   80  
-    kd                   18   
+    kp                   40 
+    kd                   10
 }
 
 baseAccelTask
