@@ -1,7 +1,10 @@
 <launch>
   <arg name="bagfile" default="/home/yhfone/ros_datas/my_bagfile.bag"/>
   
-  <arg name="topics" default="/controllers/legged_controller/joint_position  /controllers/legged_controller/joint_velocity  /controllers/legged_controller/joint_torque /controllers/legged_controller/cmd_joint_position  /controllers/legged_controller/cmd_joint_velocity  /controllers/legged_controller/cmd_joint_torque"/>
+  <arg name="topics" default="/controllers/legged_controller/joint_position  /controllers/legged_controller/joint_velocity  
+  /controllers/legged_controller/joint_torque /controllers/legged_controller/cmd_joint_position  /controllers/legged_controller/cmd_joint_velocity 
+   /controllers/legged_controller/cmd_joint_torque  /legged_bridge_hw/cmd_ff /legged_bridge_hw/cmd_pos /legged_bridge_hw/cmd_vel  
+   /legged_bridge_hw/state_pos  /legged_bridge_hw/state_vel /legged_bridge_hw/state_ff" />
 
   <node name="rosbag_record" pkg="rosbag" type="record" args="-o $(arg bagfile) $(arg topics)"/>
 </launch>

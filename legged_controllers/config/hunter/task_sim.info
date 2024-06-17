@@ -291,11 +291,11 @@ selfCollision
 ; Whole body control
 torqueLimitsTask
 {
-   (0,0)  28.0     ; motor 1
-   (1,0)  60.0     ; motor 2
-   (2,0)  60.0     ; motor 3
-   (3,0)  60.0     ; motor 4
-   (4,0)  28.0     ; motor 5
+   (0,0)  10.0     ; motor 1
+   (1,0)  10.0     ; motor 2
+   (2,0)  10.0     ; motor 3
+   (3,0)  10.0     ; motor 4
+   (4,0)  10.0     ; motor 5
 }
 
 frictionConeTask
@@ -331,7 +331,7 @@ weight
 {
     swingLeg        50
     baseAccel       1
-    contactForce    0.0
+    contactForce    1
 }
 
 ; State Estimation

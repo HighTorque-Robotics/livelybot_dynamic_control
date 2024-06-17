@@ -97,6 +97,7 @@ public:
   // void writedata2file(float pos,float vel,float tau,std::string path);
 private:
   ros::Publisher cmd_pos_pub_, cmd_vel_pub_, cmd_ff_pub_;
+  ros::Publisher state_pos_pub_, state_vel_pub_, state_ff_pub_;
   std::string cmd_path, state_path;
   bool setupJoints();
 
@@ -114,7 +115,7 @@ private:
   YKSMotorData yksSendcmd_[12];
   float transform_CurrentPos[12] = { 0 };
 
-  const std::vector<int> directionMotor_{ -1, 1, 1, 1,  -1,  -1, 1, 1, -1, -1, 1, 1 };//65432
+  const std::vector<int> directionMotor_{ -1, 1, 1, 1,  -1,  -1, 1, 1, -1, -1};//65432
 
   float read_baseMotor_[12] = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
   float write_baseMotor_[12] = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};

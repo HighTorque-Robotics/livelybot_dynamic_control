@@ -56,8 +56,8 @@ public:
     cmdVelfilteredpub_ = nh.advertise<geometry_msgs::Twist>("/cmd_vel_filtered", 1);
     gaitTypepub_ = nh.advertise<std_msgs::Int32>("/gait_type", 1);
 
-    vel_pub_ = nh.advertise<geometry_msgs::Twist>("debug/last_vel", 10);
-    obs_pub_ = nh.advertise<ocs2_msgs::mpc_observation>("debug/latest_observation", 10);
+    vel_pub_ = nh.advertise<geometry_msgs::Twist>("debug/last_vel", 1);
+    obs_pub_ = nh.advertise<ocs2_msgs::mpc_observation>("debug/latest_observation", 1);
 
     // observation subscriber
     auto observationCallback = [this](const ocs2_msgs::mpc_observation::ConstPtr& msg) {

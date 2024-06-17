@@ -8,16 +8,16 @@
 
     <param name="robot_type" value="$(arg robot_type)"/>
 
-    <arg name = "dof_type" default = "10"/>
+    <!-- <arg name = "dof_type" default = "10"/>
     <arg name = "mcu_type" default = "STM32H730"/>
     <arg name = "model_type" default = "P"/>
-    <arg name = "design" default = "Hector"/>  
+    <arg name = "design" default = "Hector"/>   -->
 
     <node name="legged_bridge_hw" pkg="legged_bridge_hw" type="legged_bridge_hw" respawn="false" clear_params="true" output="screen">
     </node>
     
     <node pkg="yesense_imu" type="yesense_imu_node" name="yesense_imu_node" output="screen" respawn="true" respawn_delay="0.002" >
-        <param name="yesense_port"      type="string" value="/dev/ttyACM0"/>
+        <param name="yesense_port"      type="string" value="/dev/ttyACM"/>
         <param name="yesense_baudrate"  type="int"    value="460800"/>
     </node>
 

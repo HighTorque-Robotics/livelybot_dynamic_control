@@ -11,6 +11,10 @@ find_package(catkin REQUIRED
         tf
         )
 
+# 查找 libserialport 库
+find_package(PkgConfig REQUIRED)
+pkg_check_modules(SERIALPORT REQUIRED libserialport)
+
 catkin_package(
         INCLUDE_DIRS
         include
@@ -28,6 +32,7 @@ include_directories(
         include
         ${catkin_INCLUDE_DIRS}
         ${Boost_INCLUDE_DIR}
+        ${SERIALPORT_INCLUDE_DIRS}
         app
         app/thirdparty/soem/soem
         app/thirdparty/soem/osal
@@ -44,6 +49,7 @@ add_executable(legged_bridge_hw
 ## Specify libraries to link executable targets against
 target_link_libraries(legged_bridge_hw
         ${catkin_LIBRARIES}
+        ${SERIALPORT_LIBRARIES}
         ) 
 
 # add
@@ -68,7 +74,7 @@ add_library(motor ${SOURCES})
 target_link_libraries(motor soem)
 
 # add_executable(master_stack_test main.cpp)
-target_link_libraries(legged_bridge_hw motor soem cpp-readline)
+target_link_libraries(legged_bridge_hw motor soem cpp-readline ${SERIALPORT_LIBRARIES})
 
 
 #########################

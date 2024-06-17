@@ -31,9 +31,12 @@ bool BridgeHW::init(ros::NodeHandle& root_nh, ros::NodeHandle& robot_hw_nh)
    
   setupJoints();
   setupImu();
-  cmd_pos_pub_ = robot_hw_nh.advertise<std_msgs::Float64MultiArray>("cmd_pos", 10);
-  cmd_vel_pub_ = robot_hw_nh.advertise<std_msgs::Float64MultiArray>("cmd_vel", 10);
-  cmd_ff_pub_ = robot_hw_nh.advertise<std_msgs::Float64MultiArray>("cmd_ff", 10);
+  cmd_pos_pub_ = robot_hw_nh.advertise<std_msgs::Float64MultiArray>("cmd_pos", 1);
+  cmd_vel_pub_ = robot_hw_nh.advertise<std_msgs::Float64MultiArray>("cmd_vel", 1);
+  cmd_ff_pub_ = robot_hw_nh.advertise<std_msgs::Float64MultiArray>("cmd_ff", 1);
+  state_pos_pub_ = robot_hw_nh.advertise<std_msgs::Float64MultiArray>("state_pos", 1);
+  state_vel_pub_ = robot_hw_nh.advertise<std_msgs::Float64MultiArray>("state_vel",1);
+  state_ff_pub_ = robot_hw_nh.advertise<std_msgs::Float64MultiArray>("state_ff",1);
 
   return true;
 }
@@ -41,7 +44,10 @@ bool BridgeHW::init(ros::NodeHandle& root_nh, ros::NodeHandle& robot_hw_nh)
 
 void BridgeHW::read(const ros::Time &time, const ros::Duration &period)
 {
-
+  std_msgs::Float64MultiArray state_pos_msg, state_vel_msg, state_ff_msg;
+  state_pos_msg.data.resize(10);
+  state_vel_msg.data.resize(10);
+  state_ff_msg.data.resize(10);
   float pos,vel,tau;
   for (int i=0; i<10; i++){
     // motor *m = motorsInterface->Motors[map_index_12dof[i]];
@@ -54,11 +60,14 @@ void BridgeHW::read(const ros::Time &time, const ros::Duration &period)
     
   }
 
+
   jointData_[3].pos_ = jointData_[3].pos_ + jointData_[2].pos_;
   jointData_[3].vel_ = jointData_[3].vel_ + jointData_[2].vel_;
 
+
   jointData_[8].pos_ = jointData_[8].pos_ + jointData_[7].pos_;
   jointData_[8].vel_ = jointData_[8].vel_ + jointData_[7].vel_;
+
 
   for(int i=0;i<10;i++)
   {
@@ -66,6 +75,15 @@ void BridgeHW::read(const ros::Time &time, const ros::Duration &period)
     jointData_[i].vel_ = jointData_[i].vel_ * directionMotor_[i];
     jointData_[i].tau_ = jointData_[i].tau_ * directionMotor_[i];
   }
+
+  for(int i=0; i<10; i++){
+    state_pos_msg.data[i] = jointData_[i].pos_;
+    state_vel_msg.data[i] = jointData_[i].vel_;
+    state_ff_msg.data[i] = jointData_[i].tau_;
+  }
+  state_pos_pub_.publish(state_pos_msg);
+  state_vel_pub_.publish(state_vel_msg);
+  state_ff_pub_.publish(state_ff_msg);
 
   imuData_.ori[0] = yesenceIMU_.orientation.x;       
   imuData_.ori[1] = yesenceIMU_.orientation.y; 
@@ -116,32 +134,24 @@ void BridgeHW::write(const ros::Time& time, const ros::Duration& period)
   cmd_pos_pub_.publish(cmd_pos_msg);
   cmd_vel_pub_.publish(cmd_vel_msg);
   cmd_ff_pub_.publish(cmd_ff_msg);
-  // std::cout<<std::endl;
+
+
 
   for (int i = 0; i < 10; ++i){
-    // motor *m = motorsInterface->Motors[map_index_12dof[i]];
     if(i == 3 || i == 8){
-      motorsInterface->fresh_cmd_dynamic_config(yksSendcmd_[i].pos_des_ - yksSendcmd_[i - 1].pos_des_, (yksSendcmd_[i].vel_des_ - yksSendcmd_[i - 1].vel_des_), yksSendcmd_[i].ff_, yksSendcmd_[i].kp_, yksSendcmd_[i].kd_,map_index_12dof[i]);
+      motorsInterface->fresh_cmd_dynamic_config(yksSendcmd_[i].pos_des_ - yksSendcmd_[i - 1].pos_des_, (yksSendcmd_[i].vel_des_ - yksSendcmd_[i - 1].vel_des_), yksSendcmd_[i].ff_ , yksSendcmd_[i].kp_, yksSendcmd_[i].kd_,map_index_12dof[i]);
 
     }else if(i==4 || i==9){
       motorsInterface->fresh_cmd_dynamic_config(yksSendcmd_[i].pos_des_, yksSendcmd_[i].vel_des_, std::clamp(yksSendcmd_[i].ff_,-3. , 3.), yksSendcmd_[i].kp_ , yksSendcmd_[i].kd_ ,map_index_12dof[i]);
-
-      //  m->fresh_cmd(yksSendcmd_[i].pos_des_, yksSendcmd_[i].vel_des_, std::clamp(yksSendcmd_[i].ff_ * 0,-3. , 3.), yksSendcmd_[i].kp_ , yksSendcmd_[i].kd_ );
     }
     else{
       motorsInterface->fresh_cmd_dynamic_config(yksSendcmd_[i].pos_des_, yksSendcmd_[i].vel_des_,yksSendcmd_[i].ff_, yksSendcmd_[i].kp_, yksSendcmd_[i].kd_,map_index_12dof[i]);
-
-        // m->fresh_cmd(yksSendcmd_[i].pos_des_, yksSendcmd_[i].vel_des_,yksSendcmd_[i].ff_*0, yksSendcmd_[i].kp_, yksSendcmd_[i].kd_);
     }
 
   }
 
   motorsInterface->fresh_cmd_dynamic_config(-yksSendcmd_[4].pos_des_, -yksSendcmd_[4].vel_des_, -yksSendcmd_[4].ff_, yksSendcmd_[4].kp_, yksSendcmd_[4].kd_,0);
   motorsInterface->fresh_cmd_dynamic_config(-yksSendcmd_[9].pos_des_,-yksSendcmd_[9].vel_des_,  -yksSendcmd_[9].ff_, yksSendcmd_[9].kp_, yksSendcmd_[9].kd_,6);
-  // motor *left_tol = motorsInterface->Motors[0];
-  // motor *right_tol = motorsInterface->Motors[6];
-  // left_tol->fresh_cmd(-yksSendcmd_[4].pos_des_, -yksSendcmd_[4].vel_des_, -yksSendcmd_[4].ff_ * 0, yksSendcmd_[4].kp_, yksSendcmd_[4].kd_);
-  // right_tol->fresh_cmd(-yksSendcmd_[9].pos_des_,-yksSendcmd_[9].vel_des_,  -yksSendcmd_[9].ff_ * 0, yksSendcmd_[9].kp_, yksSendcmd_[9].kd_);
 
   motorsInterface->motor_send_2();
   

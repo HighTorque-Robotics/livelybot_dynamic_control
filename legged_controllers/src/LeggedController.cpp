@@ -71,16 +71,16 @@ bool LeggedController::init(hardware_interface::RobotHW* robot_hw, ros::NodeHand
 
   //////////////////////////////////////////////////////////////////////////////////
 
-  pos_pub_ = controller_nh.advertise<std_msgs::Float64MultiArray>("joint_position", 10);
-  vel_pub_ = controller_nh.advertise<std_msgs::Float64MultiArray>("joint_velocity", 10);
-  torque_pub_ = controller_nh.advertise<std_msgs::Float64MultiArray>("joint_torque", 10);
+  pos_pub_ = controller_nh.advertise<std_msgs::Float64MultiArray>("joint_position", 1);
+  vel_pub_ = controller_nh.advertise<std_msgs::Float64MultiArray>("joint_velocity", 1);
+  torque_pub_ = controller_nh.advertise<std_msgs::Float64MultiArray>("joint_torque", 1);
 
-  body_pose_pub_ = controller_nh.advertise<geometry_msgs::PoseStamped>("pose_stamped", 10);
-  imu_pub_ = controller_nh.advertise<std_msgs::Float64MultiArray>("imu", 10);
+  body_pose_pub_ = controller_nh.advertise<geometry_msgs::PoseStamped>("pose_stamped", 1);
+  imu_pub_ = controller_nh.advertise<std_msgs::Float64MultiArray>("imu", 1);
 
-  cmd_pos_pub_ = controller_nh.advertise<std_msgs::Float64MultiArray>("cmd_joint_position", 10);
-  cmd_vel_pub_ = controller_nh.advertise<std_msgs::Float64MultiArray>("cmd_joint_velocity", 10);
-  cmd_tau_pub_ = controller_nh.advertise<std_msgs::Float64MultiArray>("cmd_joint_torque", 10);
+  cmd_pos_pub_ = controller_nh.advertise<std_msgs::Float64MultiArray>("cmd_joint_position", 1);
+  cmd_vel_pub_ = controller_nh.advertise<std_msgs::Float64MultiArray>("cmd_joint_velocity", 1);
+  cmd_tau_pub_ = controller_nh.advertise<std_msgs::Float64MultiArray>("cmd_joint_torque", 1);
   //////////////////////////////////////////////////////////////////////////////////
 
 
@@ -193,6 +193,7 @@ void LeggedController::update(const ros::Time& time, const ros::Duration& period
     plannedMode = 3;
     wbc_->setStanceMode(true);
   }
+  // std::cout<<"jointDim_ = "<<jointDim_<<std::endl;
   const vector_t& mpc_planned_body_pos = optimizedState.segment(6, 6);
   const vector_t& mpc_planned_joint_pos = optimizedState.segment(6 + 6, jointDim_);
   const vector_t& mpc_planned_joint_vel = optimizedInput.segment(12, jointDim_);
@@ -256,7 +257,7 @@ void LeggedController::update(const ros::Time& time, const ros::Duration& period
       if (j == 0 || j == 1 || j == 5 || j == 6)
       {
         hybridJointHandles_[j].setCommand(posDes_[j], velDes_[j],
-                                          cmdContactFlag[int(j / 5)] ? kp_small_stance : kp_small_swing, kd_small,
+                                          cmdContactFlag[int(j / 5)] ? kp_small_stance: kp_small_swing, kd_small,
                                           wbc_planned_torque(j));
       }
       else if (j == 4 || j == 9)
@@ -268,7 +269,7 @@ void LeggedController::update(const ros::Time& time, const ros::Duration& period
       else
       {
         hybridJointHandles_[j].setCommand(posDes_[j], velDes_[j],
-                                          cmdContactFlag[int(j / 5)] ? kp_big_stance : kp_big_swing, kd_big,
+                                          cmdContactFlag[int(j / 5)] ? kp_big_stance: kp_big_swing, kd_big,
                                           wbc_planned_torque(j));
       }
       ctrl_pos_msg.data[j] = posDes_[j];
