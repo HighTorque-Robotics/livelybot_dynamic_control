@@ -106,10 +106,10 @@ TargetTrajectories cmdVelToTargetTrajectories(const vector_t& cmdVel, const Syst
   vector_t cmdVelRot = getRotationMatrixFromZyxEulerAngles(zyx) * cmdVel.head(3);
   const scalar_t timeToTarget = TIME_TO_TARGET;
   scalar_t z_change = cmdVelRot(3) * timeToTarget;
-  if (fabs(cmdVelRot(0)) < 0.06)
-    cmdVelRot(0) = 0;
-  else if (fabs(cmdVelRot(1)) < 0.06)
-    cmdVelRot(1) = 0;
+  // if (fabs(cmdVelRot(0)) < 0.06)
+  //   cmdVelRot(0) = 0;
+  // else if (fabs(cmdVelRot(1)) < 0.06)
+  //   cmdVelRot(1) = 0;
   const vector_t targetPose = [&]() {
     vector_t target(6);
     target(0) = currentPose(0) + cmdVelRot(0) * timeToTarget;

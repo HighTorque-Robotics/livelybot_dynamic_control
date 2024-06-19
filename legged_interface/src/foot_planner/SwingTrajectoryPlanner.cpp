@@ -302,7 +302,7 @@ vector3_t SwingTrajectoryPlanner::calNextFootPos(int feet, scalar_t current_time
   current_body_vel_tmp(2) = 0;
   const vector3_t& vel_linear = current_body_vel_tmp;
 
-  const scalar_t k = 0.03;
+  const scalar_t k = 0.01;   //k=0.03
   vector3_t p_shoulder = (stop_time - current_time) * (0.5 * vel_linear + 0.5 * vel_cmd_linear) + roted_bias;
   vector3_t p_symmetry = (next_middle_time - stop_time) * vel_linear + k * (vel_linear - vel_cmd_linear);
   vector3_t p_centrifugal = 0.5 * sqrt(current_body_pos(2) / 9.81) * vel_linear.cross(vel_cmd_angular);

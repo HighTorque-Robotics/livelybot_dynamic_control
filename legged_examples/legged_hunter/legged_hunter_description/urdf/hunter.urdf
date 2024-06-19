@@ -361,8 +361,8 @@
     <axis
       xyz="0 1 0" />
     <limit
-      lower="-1.2"
-      upper="0.95"
+      lower="-1.57"
+      upper="1.57"
       effort="21"
       velocity="21" />
   </joint>
@@ -753,7 +753,7 @@
     <child
       link="leg_l3_link" />
     <axis
-      xyz="0 -1 0" />
+      xyz="0 1 0" />
     <limit
       lower="-0.8"
       upper="1.8"
@@ -869,10 +869,10 @@
     <child
       link="leg_l5_link" />
     <axis
-      xyz="0 -1 0" />
+      xyz="0 1 0" />
     <limit
-      lower="-0.8"
-      upper="1.2"
+      lower="-1.57"
+      upper="1.57"
       effort="21"
       velocity="21" />
   </joint>

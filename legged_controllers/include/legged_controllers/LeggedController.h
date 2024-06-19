@@ -71,6 +71,7 @@ protected:
   void setWalkCallback(const std_msgs::Float32::ConstPtr& msg);
   void loadControllerCallback(const std_msgs::Float32::ConstPtr& msg);
   void EmergencyStopCallback(const std_msgs::Float32::ConstPtr& msg);
+  void ResetTargetCallback(const std_msgs::Float32::ConstPtr& msg);
 
   void resetMPC();
   void RetrievingParameters();
@@ -106,6 +107,7 @@ protected:
   ros::Subscriber subSetWalk_;
   ros::Subscriber subLoadcontroller_;
   ros::Subscriber subEmgstop_;
+  ros::Subscriber subResetTarget_;
 
   ros::Duration startingTime_;
 
@@ -153,6 +155,7 @@ private:
   InverseKinematics inverseKinematics_;
 
   ros::Publisher pos_pub_, vel_pub_, torque_pub_, body_pose_pub_, imu_pub_;
+  ros::Publisher cmd_pos_pub_, cmd_vel_pub_, cmd_tau_pub_;
   
 
 };

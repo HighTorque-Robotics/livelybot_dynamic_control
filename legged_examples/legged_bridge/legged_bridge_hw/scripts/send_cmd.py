@@ -1,4 +1,4 @@
-#!/root/miniconda3/envs/py39cu12/bin/python
+#!/usr/bin/env python
 
 import rospy
 from geometry_msgs.msg import Twist
@@ -17,23 +17,23 @@ class KeyboardController:
                 rospy.signal_shutdown("Quit")
             else:
                 if key.char == 'w':
-                    self.twist_msg.linear.x = 0.2
+                    self.twist_msg.linear.x = 0.35
                 elif key.char == 's':
-                    self.twist_msg.linear.x = -0.2
+                    self.twist_msg.linear.x = -0.35
                 else:
                     self.twist_msg.linear.x = 0.0
 
                 if key.char == 'a':
-                    self.twist_msg.angular.z = 0.2
+                    self.twist_msg.angular.z = 0.35
                 elif key.char == 'd':
-                    self.twist_msg.angular.z = -0.2
+                    self.twist_msg.angular.z = -0.35
                 else:
                     self.twist_msg.angular.z = 0.0
         except AttributeError:
             pass
 
     def on_release(self, key):
-        self.twist_msg.linear.x = 0.15
+        self.twist_msg.linear.x = 0.0
         self.twist_msg.angular.z = 0.0
 
 def ros_publish():

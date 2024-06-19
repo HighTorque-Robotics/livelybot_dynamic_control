@@ -185,17 +185,18 @@ scalar_t SwitchedModelReferenceManager::findInsertModeSequenceTemplateTimer(Mode
 void SwitchedModelReferenceManager::walkGait(scalar_t body_height, scalar_t initTime, scalar_t finalTime,
                                              ModeSchedule& modeSchedule)
 {
-  if (velAvg_ <= 0.02)
-  {
-    if (gaitLevel_ != 0)
-    {
-      printf("start to stance\n");
-      auto inserTimer = findInsertModeSequenceTemplateTimer(modeSchedule, initTime);
-      gaitSchedulePtr_->insertModeSequenceTemplate(stance, inserTimer, finalTime);
-      gaitLevel_ = 0;
-    }
-  }
-  else if (velAvg_ > 0.03 && velAvg_ < 0.4)
+  // if (velAvg_ <= 0.02)
+  // {
+  //   if (gaitLevel_ != 0)
+  //   {
+  //     printf("start to stance\n");
+  //     auto inserTimer = findInsertModeSequenceTemplateTimer(modeSchedule, initTime);
+  //     gaitSchedulePtr_->insertModeSequenceTemplate(stance, inserTimer, finalTime);
+  //     gaitLevel_ = 0;
+  //   }
+  // }
+  // else if (velAvg_ > 0.03 && velAvg_ < 0.4)
+  if (velAvg_ < 0.4)
   {
     if (gaitLevel_ != 1)
     {

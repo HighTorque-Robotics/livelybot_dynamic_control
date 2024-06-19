@@ -78,6 +78,9 @@ bool LeggedController::init(hardware_interface::RobotHW* robot_hw, ros::NodeHand
   body_pose_pub_ = controller_nh.advertise<geometry_msgs::PoseStamped>("pose_stamped", 10);
   imu_pub_ = controller_nh.advertise<std_msgs::Float64MultiArray>("imu", 10);
 
+  cmd_pos_pub_ = controller_nh.advertise<std_msgs::Float64MultiArray>("cmd_joint_position", 10);
+  cmd_vel_pub_ = controller_nh.advertise<std_msgs::Float64MultiArray>("cmd_joint_velocity", 10);
+  cmd_tau_pub_ = controller_nh.advertise<std_msgs::Float64MultiArray>("cmd_joint_torque", 10);
   //////////////////////////////////////////////////////////////////////////////////
 
 
@@ -193,7 +196,7 @@ void LeggedController::update(const ros::Time& time, const ros::Duration& period
   const vector_t& mpc_planned_body_pos = optimizedState.segment(6, 6);
   const vector_t& mpc_planned_joint_pos = optimizedState.segment(6 + 6, jointDim_);
   const vector_t& mpc_planned_joint_vel = optimizedInput.segment(12, jointDim_);
-
+  // std::cerr<<"足底力："<<optimizedInput.segment(0,3)<<std::endl;
   // WBC
   wbcTimer_.startTimer();
   vector_t x = wbc_->update(optimizedState, optimizedInput, measuredRbdState_, plannedMode, period.toSec());
@@ -213,10 +216,10 @@ void LeggedController::update(const ros::Time& time, const ros::Duration& period
 
   vector_t output_torque(jointDim_);
   //*********************** Set Joint Command: Normal Tracking *****************************//
-  std_msgs::Float64MultiArray ctrl_pos_msg, ctrl_vel_msg, ctrl_ff_msg;
+  std_msgs::Float64MultiArray ctrl_pos_msg, ctrl_vel_msg, ctrl_tau_msg;
   ctrl_pos_msg.data.resize(10);
   ctrl_vel_msg.data.resize(10);
-  ctrl_ff_msg.data.resize(10);
+  ctrl_tau_msg.data.resize(10);
   for (size_t j = 0; j < jointDim_; ++j)
   {
     //"Limit protection
@@ -242,6 +245,9 @@ void LeggedController::update(const ros::Time& time, const ros::Duration& period
         hybridJointHandles_[j].setCommand(mpc_planned_joint_pos[j], mpc_planned_joint_vel[j], kp_position, kd_position,
                                           0);
       }
+      ctrl_pos_msg.data[j] = mpc_planned_joint_pos[j];
+      ctrl_vel_msg.data[j] = mpc_planned_joint_vel[j];
+      ctrl_tau_msg.data[j] = 0;
     }
     else
     {
@@ -265,6 +271,9 @@ void LeggedController::update(const ros::Time& time, const ros::Duration& period
                                           cmdContactFlag[int(j / 5)] ? kp_big_stance : kp_big_swing, kd_big,
                                           wbc_planned_torque(j));
       }
+      ctrl_pos_msg.data[j] = posDes_[j];
+      ctrl_vel_msg.data[j] = velDes_[j];
+      ctrl_tau_msg.data[j] = wbc_planned_torque(j);
     }
     if (emergencyStopFlag_)
     {
@@ -302,7 +311,9 @@ void LeggedController::update(const ros::Time& time, const ros::Duration& period
 
   // Publish the observation. Only needed for the command interface
   observationPublisher_.publish(ros_msg_conversions::createObservationMsg(currentObservation_));
-
+  cmd_pos_pub_.publish(ctrl_pos_msg);
+  cmd_vel_pub_.publish(ctrl_vel_msg);
+  cmd_tau_pub_.publish(ctrl_tau_msg);
 }
 
 void LeggedController::updateStateEstimation(const ros::Time& time, const ros::Duration& period)
@@ -552,6 +563,8 @@ void LeggedController::ModeSubscribe()
                                                                       &LeggedController::loadControllerCallback, this);
   subEmgstop_ = ros::NodeHandle().subscribe<std_msgs::Float32>("/emergency_stop", 1,
                                                                &LeggedController::EmergencyStopCallback, this);
+  subResetTarget_ = ros::NodeHandle().subscribe<std_msgs::Float32>("/reset_estimation", 1,
+                                                                  &LeggedController::ResetTargetCallback, this);                                                               
 }
 
 void LeggedController::EmergencyStopCallback(const std_msgs::Float32::ConstPtr& msg)
@@ -572,6 +585,22 @@ void LeggedController::loadControllerCallback(const std_msgs::Float32::ConstPtr&
   mpcRunning_ = true;
   ROS_INFO("Successfully load the controller");
 }
+
+void LeggedController::ResetTargetCallback(const std_msgs::Float32::ConstPtr& msg)
+{
+    // Initial state
+  currentObservation_.state.setZero(stateDim_);
+  currentObservation_.input.setZero(inputDim_);
+  currentObservation_.state.segment(6 + 6, jointDim_) = defalutJointPos_;
+  currentObservation_.mode = ModeNumber::STANCE;
+
+  TargetTrajectories target_trajectories({ currentObservation_.time }, { currentObservation_.state },
+                                         { currentObservation_.input });
+
+  mpcMrtInterface_->getReferenceManager().setTargetTrajectories(target_trajectories);
+  ROS_INFO("Reset the target");
+
+} 
 
 }  // namespace legged
 

@@ -30,10 +30,18 @@ catkin_package(
 ## Build ##
 ###########
 
+find_library(SERIALPORT_LIBRARY serialport)
+if(NOT SERIALPORT_LIBRARY)
+  message(FATAL_ERROR "libserialport not found")
+endif()
+
+
 include_directories(
         include
         ${catkin_INCLUDE_DIRS}
 )
+
+
 
 add_library(${PROJECT_NAME}
         src/LeggedHW.cpp
@@ -42,6 +50,7 @@ add_library(${PROJECT_NAME}
 
 target_link_libraries(${PROJECT_NAME}
         ${catkin_LIBRARIES}
+        ${SERIALPORT_LIBRARY}
         )
 
 #########################

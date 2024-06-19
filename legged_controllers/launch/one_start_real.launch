@@ -7,7 +7,7 @@
     <arg name="rviz" default="true"/>
     <arg name="record_data" default="false"/>
 
-    <rosparam file="/home/yhfone/bipedal_robot_ws/src/liveleybotrobot/src/livelybot_description/robot_param/12dof_STM32H730_model_P_Hector_params_livelybot.yaml" command="load" />
+    <rosparam file="/home/hightorque/bipedal_robot_ws/src/livelybot_robot/src/livelybot_description/robot_param/12dof_STM32H730_model_test_Orin_params.yaml" command="load" />
 
     <include file="$(find legged_bridge_hw)/launch/legged_bridge_lively_HW.launch"/>
 
