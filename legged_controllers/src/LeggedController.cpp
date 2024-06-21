@@ -105,7 +105,7 @@ bool LeggedController::init(hardware_interface::RobotHW* robot_hw, ros::NodeHand
 
   // Whole body control
   wbc_ = std::make_shared<WeightedWbc>(leggedInterface_->getPinocchioInterface(),
-                                       leggedInterface_->getCentroidalModelInfo(), *eeKinematicsPtr_);
+                                       leggedInterface_->getCentroidalModelInfo(), *eeKinematicsPtr_, controller_nh);
   wbc_->loadTasksSetting(taskFile, verbose);
   wbc_->setStanceMode(true);
 

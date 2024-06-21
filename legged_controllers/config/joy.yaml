@@ -3,14 +3,14 @@ teleop:
     type: topic
     message_type: geometry_msgs/Twist
     topic_name: cmd_vel
-    ##deadman_buttons: [ 6 ]   # # 4 map F710 Speed commands can only be issued by pressing this button  
+    # deadman_buttons: [ 6 ]   # # 4 map F710 Speed commands can only be issued by pressing this button  
     axis_mappings:
       - axis: 3
         target: angular.z
         scale: 1.5
       - axis: 1
         target: linear.x
-        scale: 0.05
+        scale: 0.1
       - axis: 0
         target: linear.y
         scale: 0.0

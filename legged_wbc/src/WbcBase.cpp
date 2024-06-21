@@ -22,11 +22,13 @@ at www.bridgedp.com.
 #include <pinocchio/algorithm/frames.hpp>
 #include <pinocchio/algorithm/rnea.hpp>
 #include <utility>
+#include "std_msgs/Float64MultiArray.h"
+#include "legged_wbc/nvector3f.h"
 
 namespace legged
 {
 WbcBase::WbcBase(const PinocchioInterface& pinocchioInterface, CentroidalModelInfo info,
-                 const PinocchioEndEffectorKinematics& eeKinematics)
+                 const PinocchioEndEffectorKinematics& eeKinematics, ros::NodeHandle& nh)
   : pinocchioInterfaceMeasured_(pinocchioInterface)
   , pinocchioInterfaceDesired_(pinocchioInterface)
   , info_(std::move(info))
@@ -46,6 +48,11 @@ WbcBase::WbcBase(const PinocchioInterface& pinocchioInterface, CentroidalModelIn
   cmd_body_vel_.setZero();
   earlyLatecontact_[0].fill(false);
   earlyLatecontact_[1].fill(false);
+  SwingPosErrPub_ = nh.advertise<legged_wbc::nvector3f>("SwingPosErrWBC",1);
+  SwingVelErrPub_ = nh.advertise<legged_wbc::nvector3f>("SwingVelErrWBC",1);
+  SwingKpErrPub_ = nh.advertise<legged_wbc::nvector3f>("SwingKpErrWBC",1);
+  SwingKdErrPub_ = nh.advertise<legged_wbc::nvector3f>("SwingKdErrWBC",1);
+
 }
 
 vector_t WbcBase::update(const vector_t& stateDesired, const vector_t& inputDesired, const vector_t& rbdStateMeasured,
@@ -302,6 +309,13 @@ Task WbcBase::formulateSwingLegTask()
   eeKinematics_->setPinocchioInterface(pinocchioInterfaceDesired_);
   std::vector<vector3_t> posDesired = eeKinematics_->getPosition(vector_t());
   std::vector<vector3_t> velDesired = eeKinematics_->getVelocity(vector_t(), vector_t());
+  legged_wbc::nvector3f swing_pos_err_msg,swing_vel_err_msg,swing_kp_err_msg,swing_kd_err_msg;
+
+  swing_pos_err_msg.data.resize(4);
+  swing_vel_err_msg.data.resize(4);
+  swing_kp_err_msg.data.resize(4);
+  swing_kd_err_msg.data.resize(4);
+ 
 
   matrix_t a(3 * (info_.numThreeDofContacts - numContacts_), numDecisionVars_);
   vector_t b(a.rows());
@@ -317,18 +331,45 @@ Task WbcBase::formulateSwingLegTask()
         vector3_t accel = swingKp_ * 0.3 * (posDesired[i] - posMeasured[i]) + swingKd_ * 0.3 * (velDesired[i] - velMeasured[i]);
         a.block(3 * j, 0, 3, info_.generalizedCoordinatesNum) = j_.block(3 * i, 0, 3, info_.generalizedCoordinatesNum);
         b.segment(3 * j, 3) = accel - dj_.block(3 * i, 0, 3, info_.generalizedCoordinatesNum) * vMeasured_;
+        swing_pos_err_msg.data[i].x = (posDesired[i] - posMeasured[i])(0);
+        swing_pos_err_msg.data[i].y = (posDesired[i] - posMeasured[i])(1);
+        swing_pos_err_msg.data[i].z = (posDesired[i] - posMeasured[i])(2);
+        swing_vel_err_msg.data[i].x = (posDesired[i] - posMeasured[i])(0);
+        swing_vel_err_msg.data[i].y = (posDesired[i] - posMeasured[i])(1);
+        swing_vel_err_msg.data[i].z = (posDesired[i] - posMeasured[i])(2);
+        swing_kp_err_msg.data[i].x = swingKp_ * 0.3 * (posDesired[i] - posMeasured[i])(0);
+        swing_kp_err_msg.data[i].y = swingKp_ * 0.3 * (posDesired[i] - posMeasured[i])(1);
+        swing_kp_err_msg.data[i].z = swingKp_ * 0.3 * (posDesired[i] - posMeasured[i])(2);
+        swing_kd_err_msg.data[i].x = swingKd_ * 0.3 * (velDesired[i] - velMeasured[i])(0);
+        swing_kd_err_msg.data[i].y = swingKd_ * 0.3 * (velDesired[i] - velMeasured[i])(1);
+        swing_kd_err_msg.data[i].z = swingKd_ * 0.3 * (velDesired[i] - velMeasured[i])(2);
       }
       else if (i == 2 || i == 3)
       {
         vector3_t accel = swingKp_ * (posDesired[i] - posMeasured[i]) + swingKd_ * (velDesired[i] - velMeasured[i]);
         a.block(3 * j, 0, 3, info_.generalizedCoordinatesNum) = j_.block(3 * i, 0, 3, info_.generalizedCoordinatesNum);
         b.segment(3 * j, 3) = accel - dj_.block(3 * i, 0, 3, info_.generalizedCoordinatesNum) * vMeasured_;
+        swing_pos_err_msg.data[i].x = (posDesired[i] - posMeasured[i])(0);
+        swing_pos_err_msg.data[i].y = (posDesired[i] - posMeasured[i])(1);
+        swing_pos_err_msg.data[i].z = (posDesired[i] - posMeasured[i])(2);
+        swing_vel_err_msg.data[i].x = (posDesired[i] - posMeasured[i])(0);
+        swing_vel_err_msg.data[i].y = (posDesired[i] - posMeasured[i])(1);
+        swing_vel_err_msg.data[i].z = (posDesired[i] - posMeasured[i])(2);
+        swing_kp_err_msg.data[i].x = swingKp_ * 0.3 * (posDesired[i] - posMeasured[i])(0);
+        swing_kp_err_msg.data[i].y = swingKp_ * 0.3 * (posDesired[i] - posMeasured[i])(1);
+        swing_kp_err_msg.data[i].z = swingKp_ * 0.3 * (posDesired[i] - posMeasured[i])(2);
+        swing_kd_err_msg.data[i].x = swingKd_ * 0.3 * (velDesired[i] - velMeasured[i])(0);
+        swing_kd_err_msg.data[i].y = swingKd_ * 0.3 * (velDesired[i] - velMeasured[i])(1);
+        swing_kd_err_msg.data[i].z = swingKd_ * 0.3 * (velDesired[i] - velMeasured[i])(2);
       }
 
       j++;
     }
   }
-
+  SwingPosErrPub_.publish(swing_pos_err_msg);
+  SwingVelErrPub_.publish(swing_vel_err_msg);
+  SwingKpErrPub_.publish(swing_kp_err_msg);
+  SwingKdErrPub_.publish(swing_kd_err_msg);
   return { a, b, matrix_t(), vector_t() };
 }
 

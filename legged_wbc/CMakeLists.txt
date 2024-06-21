@@ -5,10 +5,23 @@ set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
 find_package(catkin REQUIRED
         COMPONENTS
+        message_generation
+        std_msgs
         roscpp
         legged_interface
         qpoases_catkin
         )
+
+add_message_files(
+        FILES
+        vector3f.msg
+        nvector3f.msg
+)
+
+generate_messages(
+        DEPENDENCIES
+        std_msgs
+)
 
 find_package(Eigen3 3.3 REQUIRED NO_MODULE)
 
@@ -21,6 +34,8 @@ catkin_package(
         LIBRARIES
         ${PROJECT_NAME}
         CATKIN_DEPENDS
+        message_runtime
+        std_msgs
         roscpp
         legged_interface
         DEPENDS

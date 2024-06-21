@@ -17,6 +17,7 @@ at www.bridgedp.com.
 #include <legged_interface/gait/MotionPhaseDefinition.h>
 #include <ocs2_pinocchio_interface/PinocchioEndEffectorKinematics.h>
 #include <ocs2_centroidal_model/CentroidalModelRbdConversions.h>
+#include <ros/ros.h>
 
 namespace legged
 {
@@ -36,7 +37,7 @@ class WbcBase
 
 public:
   WbcBase(const PinocchioInterface& pinocchioInterface, CentroidalModelInfo info,
-          const PinocchioEndEffectorKinematics& eeKinematics);
+          const PinocchioEndEffectorKinematics& eeKinematics,ros::NodeHandle& nh);
 
   virtual void loadTasksSetting(const std::string& taskFile, bool verbose);
 
@@ -129,6 +130,8 @@ protected:
   vector_t jointAccDesired_;
   size_t contact_force_size_ = 0;
   bool stance_mode_ = false;
+
+  ros::Publisher SwingPosErrPub_, SwingVelErrPub_, SwingKpErrPub_, SwingKdErrPub_;
 };
 
 }  // namespace legged
