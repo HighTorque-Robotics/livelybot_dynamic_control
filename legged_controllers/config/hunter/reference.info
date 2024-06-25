@@ -1,6 +1,6 @@
 targetDisplacementVelocity          0.3;  //0.2
 targetRotationVelocity              1;
-
+real_or_sim                         1;
 
 comHeight                           0.35
 

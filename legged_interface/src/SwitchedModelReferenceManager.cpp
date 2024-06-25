@@ -56,11 +56,28 @@ std::vector<scalar_t> stance_times{ 0.0, 0.5 };
 std::vector<size_t> stance_modes{ 3 };
 ModeSequenceTemplate stance(stance_times, stance_modes);
 
-std::vector<scalar_t> trot_times{ 0.0, 0.3, 0.6 };
-std::vector<size_t> trot_modes{ 2, 1 };
+// std::vector<scalar_t> trot_times{ 0.0, 0.3, 0.6 };
+// std::vector<size_t> trot_modes{ 2, 1 };
+// ModeSequenceTemplate trot(trot_times, trot_modes);
+std::vector<scalar_t> trot_times{ 0.0, 0.225, 0.3, 0.525, 0.6 };
+std::vector<size_t> trot_modes{ 2, 0,1,0 };
 ModeSequenceTemplate trot(trot_times, trot_modes);
 
-
+  // modeSequence
+  // {
+  //   [0]     L
+  //   [1]     FLY
+  //   [2]     R
+  //   [3]     FLY
+  // }
+  // switchingTimes
+  // {
+  //   [0]     0.00
+  //   [1]     0.15
+  //   [2]     0.2
+  //   [3]     0.35
+  //   [4]     0.4
+  // }
 /******************************************************************************************************/
 /******************************************************************************************************/
 /******************************************************************************************************/
@@ -97,7 +114,7 @@ SwitchedModelReferenceManager::SwitchedModelReferenceManager(std::shared_ptr<Gai
     velCmdInBuf_.setBuffer(cmdVel);
     velCmdOutBuf_.setBuffer(cmdVel);
   };
-
+  
   velCmdSub_ = nh.subscribe<geometry_msgs::Twist>("/cmd_vel_filtered", 1, cmdVelCallback);
 
   auto gait_type_callback = [this](const std_msgs::Int32::ConstPtr& msg) { gaitType_ = msg->data; };
@@ -154,7 +171,17 @@ void SwitchedModelReferenceManager::modifyReferences(scalar_t initTime, scalar_t
   calculateVelAbs(targetTrajectories);
 
   if (gaitType_ == 0)
-  {
+  {  // if (velAvg_ <= 0.02)
+  // {
+  //   if (gaitLevel_ != 0)
+  //   {
+  //     printf("start to stance\n");
+  //     auto inserTimer = findInsertModeSequenceTemplateTimer(modeSchedule, initTime);
+  //     gaitSchedulePtr_->insertModeSequenceTemplate(stance, inserTimer, finalTime);
+  //     gaitLevel_ = 0;
+  //   }
+  // }
+  // else if (velAvg_ > 0.03 && velAvg_ < 0.4)
     walkGait(body_height, initTime, finalTime, modeSchedule);
   }
   else if (gaitType_ == 2)
@@ -191,7 +218,7 @@ void SwitchedModelReferenceManager::walkGait(scalar_t body_height, scalar_t init
   //   {
   //     printf("start to stance\n");
   //     auto inserTimer = findInsertModeSequenceTemplateTimer(modeSchedule, initTime);
-  //     gaitSchedulePtr_->insertModeSequenceTemplate(stance, inserTimer, finalTime);
+  //     gaitSchedulePtr_->itrotnsertModeSequenceTemplate(stance, inserTimer, finalTime);
   //     gaitLevel_ = 0;
   //   }
   // }
