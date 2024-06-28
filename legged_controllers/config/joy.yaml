@@ -13,7 +13,7 @@ teleop:
         scale: 0.1
       - axis: 0
         target: linear.y
-        scale: 0.0
+        scale: 0.1
 
   body_rotation:
     type: topic
