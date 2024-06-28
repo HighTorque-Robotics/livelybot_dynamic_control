@@ -56,9 +56,9 @@ teleop:
     type: topic
     message_type: std_msgs/Float32
     topic_name: emergency_stop
-    deadman_buttons: [ 7 ]
+    deadman_buttons: [ 3 ]
     axis_mappings:
-      - button: 7
+      - button: 3
         target: data
         scale: 2
         offset: 0
@@ -78,9 +78,9 @@ teleop:
     type: topic
     message_type: std_msgs/Float32
     topic_name: reset_estimation
-    deadman_buttons: [ 0 ]
+    deadman_buttons: [ 1 ]
     axis_mappings:
-      - button: 0
+      - button: 1
         target: data
         scale: 2
         offset: 0  

@@ -1,5 +1,5 @@
 <launch>
-  <arg name="bagfile" default="/home/hightorque/ros_datas/my_bagfile.bag"/>
+  <arg name="bagfile" default="/home/pi/ros_datas/my_bagfile.bag"/>
   
   <arg name="topics" default="/controllers/legged_controller/joint_position  /controllers/legged_controller/joint_velocity  /controllers/legged_controller/joint_torque 
   /controllers/legged_controller/cmd_joint_position  /controllers/legged_controller/cmd_joint_velocity  /controllers/legged_controller/cmd_joint_torque

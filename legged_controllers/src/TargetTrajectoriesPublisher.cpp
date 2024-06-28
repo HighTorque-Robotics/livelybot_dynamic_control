@@ -24,6 +24,7 @@ scalar_t TARGET_ROTATION_VELOCITY;
 scalar_t COM_HEIGHT;
 vector_t DEFAULT_JOINT_STATE(10);
 scalar_t TIME_TO_TARGET;
+scalar_t REAL_OR_SIM;
 }  // namespace
 
 scalar_t estimateTimeToTarget(const vector_t& desiredBaseDisplacement)
@@ -103,7 +104,14 @@ TargetTrajectories cmdVelToTargetTrajectories(const vector_t& cmdVel, const Syst
 {
   const vector_t currentPose = observation.state.segment<6>(6);
   vector_t VelOffset(3);
-  VelOffset<< 0.15,0,0;
+  if(REAL_OR_SIM == 0)
+  {
+    VelOffset<< 0.08,0,0;
+  }
+  else 
+  {
+    VelOffset<< 0.13,0,0;
+  }
   const Eigen::Matrix<scalar_t, 3, 1> zyx = currentPose.tail(3);
   vector_t cmdVelRot = getRotationMatrixFromZyxEulerAngles(zyx) * (cmdVel.head(3) - VelOffset.head(3));
   const scalar_t timeToTarget = TIME_TO_TARGET;
@@ -169,6 +177,7 @@ int main(int argc, char** argv)
   loadData::loadEigenMatrix(referenceFile, "defaultJointState", DEFAULT_JOINT_STATE);
   loadData::loadCppDataType(referenceFile, "targetRotationVelocity", TARGET_ROTATION_VELOCITY);
   loadData::loadCppDataType(referenceFile, "targetDisplacementVelocity", TARGET_DISPLACEMENT_VELOCITY);
+  loadData::loadCppDataType(referenceFile, "real_or_sim", REAL_OR_SIM); 
   loadData::loadCppDataType(taskFile, "mpc.timeHorizon", TIME_TO_TARGET);
 
   TargetTrajectoriesPublisher target_pose_command(nodeHandle, robotName, &goalToTargetTrajectories,
