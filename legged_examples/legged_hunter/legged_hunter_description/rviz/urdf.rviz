@@ -53,7 +53,7 @@ Visualization Manager:
       Plane Cell Count: 10
       Reference Frame: <Fixed Frame>
       Value: true
-    - Alpha: 0.5
+    - Alpha: 1
       Class: rviz/RobotModel
       Collision Enabled: false
       Enabled: true
@@ -69,6 +69,11 @@ Visualization Manager:
           Show Trail: false
           Value: true
         imu_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        l_ankle_roll_link:
           Alpha: 1
           Show Axes: false
           Show Trail: false
@@ -139,6 +144,11 @@ Visualization Manager:
           Show Trail: false
           Value: true
         leg_r_f2_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        r_ankle_roll_link:
           Alpha: 1
           Show Axes: false
           Show Trail: false
@@ -160,6 +170,8 @@ Visualization Manager:
           Value: true
         imu_link:
           Value: true
+        l_ankle_roll_link:
+          Value: true
         leg_l1_link:
           Value: true
         leg_l2_link:
@@ -188,8 +200,10 @@ Visualization Manager:
           Value: true
         leg_r_f2_link:
           Value: true
+        r_ankle_roll_link:
+          Value: true
       Marker Alpha: 1
-      Marker Scale: 0.30000001192092896
+      Marker Scale: 0.10000000149011612
       Name: TF
       Show Arrows: true
       Show Axes: true
@@ -203,19 +217,21 @@ Visualization Manager:
               leg_l3_link:
                 leg_l4_link:
                   leg_l5_link:
-                    leg_l_f1_link:
-                      {}
-                    leg_l_f2_link:
-                      {}
+                    l_ankle_roll_link:
+                      leg_l_f1_link:
+                        {}
+                      leg_l_f2_link:
+                        {}
           leg_r1_link:
             leg_r2_link:
               leg_r3_link:
                 leg_r4_link:
                   leg_r5_link:
-                    leg_r_f1_link:
-                      {}
-                    leg_r_f2_link:
-                      {}
+                    r_ankle_roll_link:
+                      leg_r_f1_link:
+                        {}
+                      leg_r_f2_link:
+                        {}
       Update Interval: 0
       Value: true
   Enabled: true
@@ -246,7 +262,7 @@ Visualization Manager:
   Views:
     Current:
       Class: rviz/Orbit
-      Distance: 1.2028908729553223
+      Distance: 0.39654433727264404
       Enable Stereo Rendering:
         Stereo Eye Separation: 0.05999999865889549
         Stereo Focal Distance: 1
@@ -254,17 +270,17 @@ Visualization Manager:
         Value: false
       Field of View: 0.7853981852531433
       Focal Point:
-        X: -0.014172688126564026
-        Y: 0.035288210958242416
-        Z: -0.30370545387268066
+        X: -0.08695336431264877
+        Y: 0.09005430340766907
+        Z: -0.11204029619693756
       Focal Shape Fixed Size: true
       Focal Shape Size: 0.05000000074505806
       Invert Z Axis: false
       Name: Current View
       Near Clip Distance: 0.009999999776482582
-      Pitch: 0.21039795875549316
+      Pitch: 0.20539797842502594
       Target Frame: <Fixed Frame>
-      Yaw: 0.9903978705406189
+      Yaw: 6.238586902618408
     Saved: ~
 Window Geometry:
   Displays:
@@ -282,5 +298,5 @@ Window Geometry:
   Views:
     collapsed: false
   Width: 1866
-  X: 1129
-  Y: 63
+  X: 694
+  Y: 27
