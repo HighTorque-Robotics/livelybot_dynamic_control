@@ -457,7 +457,7 @@
 
 
   <joint name="leg_r5_fixed_1" type="fixed">
-    <origin xyz="0.1 0 -0.0100" rpy="0 0 0" />
+    <origin xyz="0.09 0 -0.0100" rpy="0 0 0" />
     <parent link="r_ankle_roll_link" />
     <child link="leg_r_f1_link" />
   </joint>
@@ -966,7 +966,7 @@
   </joint>
 
  <joint name="leg_l5_fixed_1" type="fixed">
-    <origin xyz="0.1 0 -0.0100" rpy="0 0 0" />
+    <origin xyz="0.09 0 -0.0100" rpy="0 0 0" />
     <parent link="l_ankle_roll_link" />
     <child link="leg_l_f1_link" />
   </joint>

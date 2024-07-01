@@ -110,7 +110,7 @@ TargetTrajectories cmdVelToTargetTrajectories(const vector_t& cmdVel, const Syst
   }
   else 
   {
-    VelOffset<< 0.13,0,0;
+    VelOffset<< 0.08,0,0;
   }
 
   const Eigen::Matrix<scalar_t, 3, 1> zyx = currentPose.tail(3);

@@ -25,7 +25,7 @@ swing_trajectory_config
   swingHeight                   0.05
   swingTimeScale                0.03
 
-  feet_bias_x1                  0.144     //0.034  0.224
+  feet_bias_x1                  0.134     //0.034  0.224
   feet_bias_x2                  0.004    //-0.056  0.134
   feet_bias_y1                  0.11
   feet_bias_y2                  0.11
@@ -115,7 +115,6 @@ ipm
 
   initialBarrierParameter               1e-4
   targetBarrierParameter                1e-4
-  barrierLinearDecreaseFactor           0.2
   barrierSuperlinearDecreasePower       1.5
   barrierReductionCostTol               1e-3
   barrierReductionConstraintTol         1e-3
