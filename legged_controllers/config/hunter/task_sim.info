@@ -29,9 +29,9 @@ swing_trajectory_config
   feet_bias_x2                  0.004   //-0.056 0.004
   feet_bias_y1                  0.08
   feet_bias_y2                  0.08
-  feet_bias_z                  -0.37       //-0.33    
+  feet_bias_z                  -0.39       //-0.33    
   
-  next_stance_position_z        0.02   //0.02
+  next_stance_position_z        0.04   //0.02
 }
 
 ; DDP settings
@@ -165,21 +165,21 @@ initialState
    ;; Base Pose: [position, orientation] ;;
    (6,0)  0.0     ; p_base_x
    (7,0)  0.0     ; p_base_y
-   (8,0)  0.37   ; p_base_z
+   (8,0)  0.43   ; p_base_z
    (9,0)  0.0     ; theta_base_z
    (10,0) 0.0     ; theta_base_y
    (11,0) 0.0     ; theta_base_x
    ;; Leg Joint Positions: [LF, LH, RF, RH] ;
    (12,0)  0.00   ; leg_l1_joint
    (13,0)  0.00   ; leg_l2_joint
-   (14,0)  -0.2   ; leg_l3_joint
-   (15,0)  0.5   ; leg_l4_joint
-   (16,0)  -0.3   ; leg_l5_joint
+   (14,0)  -0.4   ; leg_l3_joint
+   (15,0)  0.8   ; leg_l4_joint
+   (16,0)  -0.4   ; leg_l5_joint
    (17,0)  0.00   ; leg_r1_joint
    (18,0)  0.00   ; leg_r2_joint
-   (19,0)  -0.2   ; leg_r3_joint
-   (20,0)  0.5   ; leg_r4_joint
-   (21,0)  -0.3   ; leg_r5_joint
+   (19,0)  -0.4   ; leg_r3_joint
+   (20,0)  0.8   ; leg_r4_joint
+   (21,0)  -0.4   ; leg_r5_joint
 }
 
 

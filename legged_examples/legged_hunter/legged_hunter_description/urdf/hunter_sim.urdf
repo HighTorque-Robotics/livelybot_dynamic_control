@@ -434,7 +434,7 @@
   </joint>
 
   <joint name="leg_r5_fixed_1" type="fixed">
-    <origin xyz="0.07 0 -0.030" rpy="0 0 0" />
+    <origin xyz="0.07 0 -0.010" rpy="0 0 0" />
     <parent link="r_ankle_roll_link" />
     <child link="leg_r_f1_link" />
   </joint>
@@ -458,7 +458,7 @@
   </link>
 
   <joint name="leg_r5_fixed_2" type="fixed">
-    <origin xyz="-0.055 0 -0.0300" rpy="0 0 0" />
+    <origin xyz="-0.055 0 -0.01" rpy="0 0 0" />
     <parent link="r_ankle_roll_link" />
     <child link="leg_r_f2_link" />
   </joint>
@@ -936,7 +936,7 @@
   </joint>
 
    <joint name="leg_l5_fixed_1" type="fixed">
-    <origin xyz="0.07 0 -0.030" rpy="0 0 0" />
+    <origin xyz="0.07 0 -0.010" rpy="0 0 0" />
     <parent link="l_ankle_roll_link" />
     <child link="leg_l_f1_link" />
   </joint>
@@ -960,7 +960,7 @@
   </link>
 
   <joint name="leg_l5_fixed_2" type="fixed">
-    <origin xyz="-0.055 0 -0.0300" rpy="0 0 0" />
+    <origin xyz="-0.055 0 -0.01" rpy="0 0 0" />
     <parent link="l_ankle_roll_link" />
     <child link="leg_l_f2_link" />
   </joint>
